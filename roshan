@@ -1,0 +1,77 @@
+class Student:
+    def _init_(self, name, roll_number):
+        self.name = name
+        self.roll_number = roll_number
+        self.grades = {}
+        self.total = 0
+        self.average = 0
+        self.status = ""
+
+    def add_grades(self, subject, grade):
+        """Add grade for a particular subject."""
+        self.grades[subject] = grade
+        self.total += grade
+
+    def compute_average(self):
+        """Compute the average grade of the student."""
+        num_subjects = len(self.grades)
+        if num_subjects > 0:
+            self.average = self.total / num_subjects
+
+    def determine_status(self):
+        """Determine pass/fail based on average grade."""
+        if self.average >= 50:
+            self.status = "Pass"
+        else:
+            self.status = "Fail"
+
+    def display_student_info(self):
+        """Display all student information."""
+        print(f"Student Name: {self.name}")
+        print(f"Roll Number: {self.roll_number}")
+        print("Grades:")
+        for subject, grade in self.grades.items():
+            print(f"  {subject}: {grade}")
+        print(f"Total Marks: {self.total}")
+        print(f"Average Marks: {self.average:.2f}")
+        print(f"Status: {self.status}")
+
+
+def main():
+    students = []
+
+    while True:
+        # Input student details
+        name = input("Enter student's name: ")
+        roll_number = input("Enter student's roll number: ")
+        
+        student = Student(name, roll_number)
+        
+        # Input grades for the student
+        while True:
+            subject = input("Enter subject name (or 'done' to stop): ")
+            if subject.lower() == 'done':
+                break
+            grade = float(input(f"Enter grade for {subject}: "))
+            student.add_grades(subject, grade)
+
+        # Compute average and status
+        student.compute_average()
+        student.determine_status()
+
+        # Add the student to the list
+        students.append(student)
+
+        # Ask if the user wants to add another student
+        another = input("Do you want to add another student? (y/n): ")
+        if another.lower() != 'y':
+            break
+
+    # Display all student results
+    print("\nStudent Results:")
+    for student in students:
+        student.display_student_info()
+
+
+if _name_ == "_main_":
+    main()
